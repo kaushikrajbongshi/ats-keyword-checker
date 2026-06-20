@@ -3,7 +3,7 @@
 A free tool that compares a resume against a job description and shows exactly which
 keywords are missing — before an Applicant Tracking System (ATS) filters the resume out.
 
-**Live demo:** [your-vercel-url-here.vercel.app](#)
+**Live demo:**https://ats-keyword-checker.vercel.app
 **Built for:** [Digital Heroes](https://digitalheroesco.com) developer trial task
 
 ---

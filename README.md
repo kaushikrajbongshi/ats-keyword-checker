@@ -1,60 +1,95 @@
 # ATS Keyword Match Checker
 
-Paste a job description and a resume, get an instant keyword-match score, and see
-exactly which keywords are missing — all client-side, nothing is stored or sent anywhere.
+A free tool that compares a resume against a job description and shows exactly which
+keywords are missing — before an Applicant Tracking System (ATS) filters the resume out.
 
-Built with Next.js 14 (App Router) + TypeScript + Tailwind CSS. No database, no backend,
-no environment variables — which means zero-config deploys on Vercel's free Hobby plan.
+**Live demo:** [your-vercel-url-here.vercel.app](#)
+**Built for:** [Digital Heroes](https://digitalheroesco.com) developer trial task
 
-## 1. Before you deploy — edit these two lines
+---
 
-Open `app/page.tsx` and change:
+## Why I built this
 
-```ts
-const AUTHOR_NAME = "Kaushik [Your Last Name]";
-const AUTHOR_EMAIL = "your.email@example.com";
-```
+Most job postings get scanned by ATS software for specific keywords before a human ever
+reads them. While optimizing my own resume for ATS compatibility, I kept manually
+cross-checking job descriptions against my resume line by line — so I built a tool that
+does it in seconds instead.
 
-to your real, reachable name and email. They show up in the header/footer of the live page.
+## Features
 
-## 2. Run it locally (optional, to preview)
+- 📋 **Paste or upload** — drop in resume text directly, or upload a `.pdf`, `.docx`, or
+  `.txt` file and it's parsed automatically
+- 🎯 **Keyword extraction** — pulls relevant skill/role keywords from the job description
+  using a curated dictionary of ~150 common technical and soft-skill terms, plus frequency
+  analysis to catch domain-specific terms
+- ✅ **Match scoring** — instant percentage score, with matched keywords highlighted and
+  missing keywords flagged
+- 🔒 **Private by design** — everything runs client-side in the browser; nothing is
+  uploaded, stored, or sent to any server
+- ⚡ **Zero backend** — fully static Next.js export, so it deploys free on Vercel with no
+  database or environment variables
+
+## How it works
+
+1. The job description is normalized and scanned against a skill/keyword dictionary
+   (e.g. `react`, `sql`, `agile`, `communication`)
+2. Frequently repeated non-generic words not already in the dictionary are added as
+   extra candidate keywords, to catch role-specific terms
+3. Each keyword is checked against the resume text for a case-insensitive,
+   word-boundary-aware match
+4. The match percentage = matched keywords ÷ total keywords found in the job description
+
+## Tech stack
+
+| Layer       | Choice                                  |
+|-------------|------------------------------------------|
+| Framework   | Next.js 14 (App Router) + TypeScript    |
+| Styling     | Tailwind CSS                            |
+| File parsing| `pdfjs-dist` (PDF), `mammoth` (DOCX)     |
+| Hosting     | Vercel (free Hobby plan)                |
+
+No database, no API routes, no environment variables.
+
+## Getting started
 
 ```bash
+git clone https://github.com/kaushikrajbongshi/ats-keyword-match-checker.git
+cd ats-keyword-match-checker
 npm install
 npm run dev
 ```
 
-Open http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000).
 
-## 3. Push to GitHub
+## Project structure
 
-```bash
-git init
-git add .
-git commit -m "ATS keyword match checker"
-gh repo create ats-keyword-match-checker --public --source=. --remote=origin --push
+```
+app/
+  layout.tsx       # root layout + metadata
+  page.tsx         # main UI: inputs, file upload, results
+  globals.css       # design tokens (graded-paper theme)
+lib/
+  matchKeywords.ts      # keyword extraction + scoring logic
+  parseResumeFile.ts    # PDF / DOCX / TXT text extraction
 ```
 
-(No `gh` CLI? Create an empty public repo on github.com first, then:)
+## Deployment
 
-```bash
-git remote add origin https://github.com/<your-username>/ats-keyword-match-checker.git
-git branch -M main
-git push -u origin main
-```
+1. Push this repo to GitHub (public)
+2. Import it on [vercel.com](https://vercel.com) — Next.js is auto-detected, no config needed
+3. Click **Deploy**
 
-## 4. Deploy on Vercel (free Hobby plan)
+## Possible future improvements
 
-1. Go to vercel.com → sign in with GitHub (free, no card).
-2. "Add New Project" → import the repo you just pushed.
-3. Framework preset auto-detects as **Next.js** — leave all defaults as-is.
-4. Click **Deploy**. You'll get a live `*.vercel.app` URL in under a minute.
+- Basic stemming so "communication" also matches "communicator"
+- Multi-language keyword support
+- Exportable PDF report of the match results
 
-## 5. Submission checklist
+## Author
 
-- [ ] Live Vercel URL works and produces a real match score
-- [ ] "Built for Digital Heroes" button (header + footer) links to https://digitalheroesco.com
-- [ ] Your real name + email are visible on the page
-- [ ] GitHub repo is public
-- [ ] Added to your portfolio
-- [ ] ₹0 spent anywhere
+**Kaushik Rajbongshi**
+📧 kaushikraj0241@gmail.com
+
+---
+
+*Built as part of the [Digital Heroes](https://digitalheroesco.com) developer trial task.*
